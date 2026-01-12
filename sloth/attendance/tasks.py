@@ -32,6 +32,7 @@ def send_unpaid_attendance_reminders():
         .select_related("skater", "practice")
     )
 
+    records_to_update = []
     for attendance in unpaid_attendance:
         skater = attendance.skater
         practice = attendance.practice
@@ -55,4 +56,8 @@ def send_unpaid_attendance_reminders():
         )
 
         attendance.reminder_sent = True
-        attendance.save()
+        records_to_update.append(attendance)
+
+    # Bulk update all reminder_sent flags in a single database query
+    if records_to_update:
+        Attendance.objects.bulk_update(records_to_update, ["reminder_sent"])
