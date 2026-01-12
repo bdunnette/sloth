@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 def send_unpaid_attendance_reminders():
     """
     Sends email reminders to guardians for attendance records that remain unpaid
-    after 5 days.
+    after the configured number of days (settings.UNPAID_ATTENDANCE_REMINDER_DAYS).
     """
     five_days_ago = timezone.now().date() - timedelta(
         days=settings.UNPAID_ATTENDANCE_REMINDER_DAYS,
