@@ -110,5 +110,6 @@ class TestAttendanceTasks:
         # Run the task
         send_unpaid_attendance_reminders.call_local()
 
-        # Check that email was sent
-        assert any(email.to == ["custom@example.com"] for email in mail.outbox)
+        # Check that exactly one email was sent
+        assert len(mail.outbox) == 1
+        assert mail.outbox[0].to == ["custom@example.com"]
