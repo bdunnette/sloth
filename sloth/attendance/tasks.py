@@ -57,8 +57,11 @@ def send_unpaid_attendance_reminders():
             )
             attendance.reminder_sent = True
             attendance.save()
-        except Exception as e:
-            logger.error(
-                f"Failed to send reminder email for attendance {attendance.id} "
-                f"(skater: {skater.name}, practice: {practice.date}): {e}",
+        except Exception:
+            logger.exception(
+                "Failed to send reminder email for attendance %s "
+                "(skater: %s, practice: %s)",
+                attendance.id,
+                skater.name,
+                practice.date,
             )
