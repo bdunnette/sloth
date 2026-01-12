@@ -113,53 +113,64 @@ class TestAttendanceTasks:
         # Check that email was sent
         assert any(email.to == ["custom@example.com"] for email in mail.outbox)
 
-    def test_send_unpaid_attendance_reminders_no_guardian_email(self):
-        """Test that skaters without guardian emails are correctly filtered out."""
-        # Create a practice 5 days ago
+    def test_send_unpaid_attendance_reminders_only_for_present_status(self):
+        """Test that reminders are only sent for PRESENT attendance, not ABSENT or EXCUSED."""
         five_days_ago = timezone.now().date() - timedelta(days=5)
         practice = Practice.objects.create(date=five_days_ago, location="The Rink")
 
-        # Create a skater with None guardian email (blank=True in model)
-        skater_no_email = Skater.objects.create(
-            name="No Email Skater",
+        # Create PRESENT attendance (should receive reminder)
+        present_skater = Skater.objects.create(
+            name="Present Skater",
             jersey_number="20",
-            guardian_email="",  # Empty string
+            guardian_email="present@example.com",
         )
-
-        # Create unpaid attendance for skater without email
-        Attendance.objects.create(
-            skater=skater_no_email,
+        present_attendance = Attendance.objects.create(
+            skater=present_skater,
             practice=practice,
             paid=False,
             status=Attendance.Status.PRESENT,
         )
 
-        # Create another skater with a valid email for comparison
-        skater_with_email = Skater.objects.create(
-            name="Valid Email Skater",
+        # Create ABSENT attendance (should NOT receive reminder)
+        absent_skater = Skater.objects.create(
+            name="Absent Skater",
             jersey_number="21",
-            guardian_email="valid@example.com",
+            guardian_email="absent@example.com",
         )
-
-        # Create unpaid attendance for skater with email
-        Attendance.objects.create(
-            skater=skater_with_email,
+        absent_attendance = Attendance.objects.create(
+            skater=absent_skater,
             practice=practice,
             paid=False,
-            status=Attendance.Status.PRESENT,
+            status=Attendance.Status.ABSENT,
+        )
+
+        # Create EXCUSED attendance (should NOT receive reminder)
+        excused_skater = Skater.objects.create(
+            name="Excused Skater",
+            jersey_number="22",
+            guardian_email="excused@example.com",
+        )
+        excused_attendance = Attendance.objects.create(
+            skater=excused_skater,
+            practice=practice,
+            paid=False,
+            status=Attendance.Status.EXCUSED,
         )
 
         # Run the task
         send_unpaid_attendance_reminders.call_local()
 
-        # Check that only one email was sent (to the skater with valid email)
+        # Only one email should be sent (to PRESENT skater)
         assert len(mail.outbox) == 1
-        assert mail.outbox[0].to == ["valid@example.com"]
+        email = mail.outbox[0]
+        assert email.to == ["present@example.com"]
+        assert "Present Skater" in email.body
 
-        # Verify the skater without email did not get a reminder sent flag
-        attendance_no_email = Attendance.objects.get(skater=skater_no_email)
-        assert attendance_no_email.reminder_sent is False
+        # Verify reminder_sent was only updated for PRESENT attendance
+        present_attendance.refresh_from_db()
+        absent_attendance.refresh_from_db()
+        excused_attendance.refresh_from_db()
 
-        # Verify the skater with email got the reminder sent flag
-        attendance_with_email = Attendance.objects.get(skater=skater_with_email)
-        assert attendance_with_email.reminder_sent is True
+        assert present_attendance.reminder_sent is True
+        assert absent_attendance.reminder_sent is False
+        assert excused_attendance.reminder_sent is False
