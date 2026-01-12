@@ -110,6 +110,67 @@ class TestAttendanceTasks:
         # Run the task
         send_unpaid_attendance_reminders.call_local()
 
-        # Check that exactly one email was sent
+        # Check that email was sent
+        assert any(email.to == ["custom@example.com"] for email in mail.outbox)
+
+    def test_send_unpaid_attendance_reminders_only_for_present_status(self):
+        """Test that reminders are only sent for PRESENT attendance, not ABSENT or EXCUSED."""
+        five_days_ago = timezone.now().date() - timedelta(days=5)
+        practice = Practice.objects.create(date=five_days_ago, location="The Rink")
+
+        # Create PRESENT attendance (should receive reminder)
+        present_skater = Skater.objects.create(
+            name="Present Skater",
+            jersey_number="20",
+            guardian_email="present@example.com",
+        )
+        present_attendance = Attendance.objects.create(
+            skater=present_skater,
+            practice=practice,
+            paid=False,
+            status=Attendance.Status.PRESENT,
+        )
+
+        # Create ABSENT attendance (should NOT receive reminder)
+        absent_skater = Skater.objects.create(
+            name="Absent Skater",
+            jersey_number="21",
+            guardian_email="absent@example.com",
+        )
+        absent_attendance = Attendance.objects.create(
+            skater=absent_skater,
+            practice=practice,
+            paid=False,
+            status=Attendance.Status.ABSENT,
+        )
+
+        # Create EXCUSED attendance (should NOT receive reminder)
+        excused_skater = Skater.objects.create(
+            name="Excused Skater",
+            jersey_number="22",
+            guardian_email="excused@example.com",
+        )
+        excused_attendance = Attendance.objects.create(
+            skater=excused_skater,
+            practice=practice,
+            paid=False,
+            status=Attendance.Status.EXCUSED,
+        )
+
+        # Run the task
+        send_unpaid_attendance_reminders.call_local()
+
+        # Only one email should be sent (to PRESENT skater)
         assert len(mail.outbox) == 1
-        assert mail.outbox[0].to == ["custom@example.com"]
+        email = mail.outbox[0]
+        assert email.to == ["present@example.com"]
+        assert "Present Skater" in email.body
+
+        # Verify reminder_sent was only updated for PRESENT attendance
+        present_attendance.refresh_from_db()
+        absent_attendance.refresh_from_db()
+        excused_attendance.refresh_from_db()
+
+        assert present_attendance.reminder_sent is True
+        assert absent_attendance.reminder_sent is False
+        assert excused_attendance.reminder_sent is False
