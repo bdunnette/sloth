@@ -58,6 +58,7 @@ class Attendance(models.Model):
     )
     paid = models.BooleanField(_("Paid"), default=False)
     notes = models.TextField(_("Notes"), blank=True)
+    reminder_sent = models.BooleanField(_("Reminder Sent"), default=False)
     history = HistoricalRecords()
 
     class Meta:

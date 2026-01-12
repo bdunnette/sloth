@@ -371,3 +371,4 @@ SPECTACULAR_SETTINGS = {
 }
 # Your stuff...
 # ------------------------------------------------------------------------------
+UNPAID_ATTENDANCE_REMINDER_DAYS = env.int("UNPAID_ATTENDANCE_REMINDER_DAYS", default=5)
