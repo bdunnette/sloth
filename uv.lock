@@ -364,15 +364,15 @@ wheels = [
 
 [[package]]
 name = "django-browser-reload"
-version = "1.17.0"
+version = "1.21.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "asgiref" },
     { name = "django" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/9f/bc/3c67f7daca53b826ec51888576fe5e117d9442d2d0acb58f4264d48b9dba/django_browser_reload-1.17.0.tar.gz", hash = "sha256:3667939cde0eee1a6d698dbe3b78cf10b573dabc4e711fb7933f1ba91fb98da4", size = 14312, upload-time = "2024-10-29T10:31:14.846Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/79/ef/ab407c1a2f14e13c75a6419a2d124954aa0364f62580ad95a3d31dc6c73d/django_browser_reload-1.21.0.tar.gz", hash = "sha256:3335ad3d107eb657f623d1a8e680dfbcab8a83ae1f94df1895e069dddf5604ba", size = 15800, upload-time = "2025-09-22T17:00:35.199Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/7f/8f/62fc4fbf5c05c2210e6cb616f1c2a3da53871dfecbaa4c44b1f482ca3e8f/django_browser_reload-1.17.0-py3-none-any.whl", hash = "sha256:d372c12c1c5962c02279a53cac7e8a020c48f104592c637a06d0768b28d2d6be", size = 12228, upload-time = "2024-10-29T10:31:13.332Z" },
+    { url = "https://files.pythonhosted.org/packages/46/61/1b4a8c589652859995bcab87682286443eb9fdf2d7fd584975b9ffc1db33/django_browser_reload-1.21.0-py3-none-any.whl", hash = "sha256:0b2a86ab460774fa9bb142a121c70e75a72f18109f51a4f6de409cd633d3a70d", size = 12852, upload-time = "2025-09-22T17:00:33.479Z" },
 ]
 
 [[package]]
@@ -449,29 +449,29 @@ wheels = [
 
 [[package]]
 name = "django-huey"
-version = "1.2.1"
+version = "1.3.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django" },
     { name = "huey" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/3d/0c/a1da34c09fb5a0cc629026835fc5a46fb28a6ff208527d6b004bd685dfbb/django_huey-1.2.1.tar.gz", hash = "sha256:634abf1e707acef90dd00df4267458486f89a3117419000ec5584b1c4129701a", size = 10925, upload-time = "2024-06-17T00:20:37.632Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c9/e8/799b74a2f1de66f7bf3350b3c465a6af7179ea51113bdb01f86a59f4d0a4/django_huey-1.3.1.tar.gz", hash = "sha256:c838f7daff3d3997a5ec657c07e720bc47ad48531c00e72c66c374833f67a59f", size = 11105, upload-time = "2026-01-11T02:47:25.711Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/bd/46/019699f3dcf2777f07b1d5465c7a4cf3d7e73b6f9e0ad8de53c73e3f9191/django_huey-1.2.1-py3-none-any.whl", hash = "sha256:59c82b72fd4b6e60c219bd1fbab78acfe68a1c8d3efb1d3e42798a67d01a4aa2", size = 12515, upload-time = "2024-06-17T00:20:32.784Z" },
+    { url = "https://files.pythonhosted.org/packages/8e/58/93d21f90e123956d236ab86c138d166a9c4432a6d37ee48324524f3c9a91/django_huey-1.3.1-py3-none-any.whl", hash = "sha256:7f62c85bc83d80a4296e6811c7de862d6f0092721b4f264e0ba88358b7d34094", size = 12648, upload-time = "2026-01-11T02:47:21.855Z" },
 ]
 
 [[package]]
 name = "django-import-export"
-version = "4.3.5"
+version = "4.4.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "diff-match-patch" },
     { name = "django" },
     { name = "tablib" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f5/82/95749066a3fc1476d3279e82634af22c950918c8e0ef97f3597fc0907461/django_import_export-4.3.5.tar.gz", hash = "sha256:61e078cea307a6199a7e905840640e55db3521d7c81be224fd8b6576ce9bd0fc", size = 2220757, upload-time = "2025-02-01T13:34:21.149Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/22/26/279bc8e6cb2c83d1b5dcdca07e932207c3352af11c6d305d6964a2d03ccc/django_import_export-4.4.0.tar.gz", hash = "sha256:9900e99c89027594941074fb4cd63a5f2964975e239021765c0f066003fcd412", size = 2237714, upload-time = "2026-01-10T20:57:35.128Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/00/fd/9e457b463364a3288bd26b3d0c53d128f224881603ac1a43434057030cd2/django_import_export-4.3.5-py3-none-any.whl", hash = "sha256:143611d9d3c8b000c54e33db122c8d283eef38167acd7a854d15b9ad77c328e7", size = 144185, upload-time = "2025-02-01T13:34:19.28Z" },
+    { url = "https://files.pythonhosted.org/packages/2f/e0/f4aa6d2374cc6b53b23f36bd0d5814e1db2769b25931b9908723fa295bb0/django_import_export-4.4.0-py3-none-any.whl", hash = "sha256:2d9b234c0f024d3377167f4d9c5a506e095c5bad98e06d30700e1d0752829e3d", size = 157449, upload-time = "2026-01-10T20:57:33.141Z" },
 ]
 
 [[package]]
@@ -488,14 +488,14 @@ wheels = [
 
 [[package]]
 name = "django-simple-history"
-version = "3.7.0"
+version = "3.11.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/91/bf/a13fdb19834b9a7fc2c6b1b192891e4eac90c1281fb65904a34ad80c0e4f/django_simple_history-3.7.0.tar.gz", hash = "sha256:ac3b7ca8b0d33f7ea6be8fe7fc98cf43415efa500ff5dfe736fbd1ebc0cf39f9", size = 230317, upload-time = "2024-05-30T15:56:57.837Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a8/11/410049f1454b99a78f719d3403fc89437c2a38ee092e939d5ab8d4846738/django_simple_history-3.11.0.tar.gz", hash = "sha256:2c587479cf2c3071e9aa555d0d11b73676994db4910770958f57659ade2deffe", size = 234862, upload-time = "2025-12-11T13:50:55.022Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/9c/61/d9ec3f38161b4d9ec6a6ed16e882a402d6e4a3b20de2902e4fb6671ed630/django_simple_history-3.7.0-py3-none-any.whl", hash = "sha256:282cb2c4aa63f51547f17da7f2130abaa81ba01694676d19b88d52c94a57a52c", size = 139406, upload-time = "2024-05-30T16:00:38.188Z" },
+    { url = "https://files.pythonhosted.org/packages/6e/c2/e9854a3438cfc80891ab4d3826b7c61a0fe5ba3a4da89104a8f5c9afb5df/django_simple_history-3.11.0-py3-none-any.whl", hash = "sha256:f3c298db49e418ffce7fb709a5e83108452ea2179ec5c4b9232484c25427192a", size = 81868, upload-time = "2025-12-11T13:50:53.71Z" },
 ]
 
 [[package]]
@@ -658,14 +658,14 @@ wheels = [
 
 [[package]]
 name = "factory-boy"
-version = "3.3.2"
+version = "3.3.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "faker" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/8d/64/55753b61bade6ea0263f2d9889f2a88b795c7287d62dd6ff669af8e2d8e0/factory_boy-3.3.2.tar.gz", hash = "sha256:4be7a7594b5ecfebcc3e8dc607f3d7561bfb5c362885933afda6c792094007b4", size = 163985, upload-time = "2025-02-03T09:28:24.245Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ba/98/75cacae9945f67cfe323829fc2ac451f64517a8a330b572a06a323997065/factory_boy-3.3.3.tar.gz", hash = "sha256:866862d226128dfac7f2b4160287e899daf54f2612778327dd03d0e2cb1e3d03", size = 164146, upload-time = "2025-02-03T09:49:04.433Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/72/3d/dfdda055f69d5f51db9b2c3f02a7d2aac3dcef53a3819ad61051d18372ec/factory_boy-3.3.2-py2.py3-none-any.whl", hash = "sha256:ec642ff9b1405a3ab462580dbfe7ba931c5ce32dd9493c0e3552f4af6554fcde", size = 36878, upload-time = "2025-02-03T09:28:21.766Z" },
+    { url = "https://files.pythonhosted.org/packages/27/8d/2bc5f5546ff2ccb3f7de06742853483ab75bf74f36a92254702f8baecc79/factory_boy-3.3.3-py2.py3-none-any.whl", hash = "sha256:1c39e3289f7e667c4285433f305f8d506efc2fe9c73aaea4151ebd5cdea394fc", size = 37036, upload-time = "2025-02-03T09:49:01.659Z" },
 ]
 
 [[package]]
@@ -1654,14 +1654,14 @@ requires-dist = [
     { name = "django", specifier = "==5.2.10" },
     { name = "django-allauth", extras = ["mfa", "socialaccount"], specifier = "==65.13.1" },
     { name = "django-anymail", extras = ["mailgun"], specifier = "==14.0" },
-    { name = "django-browser-reload", specifier = "==1.17.0" },
+    { name = "django-browser-reload", specifier = "==1.21.0" },
     { name = "django-cors-headers", specifier = "==4.9.0" },
     { name = "django-crispy-forms", specifier = "==2.5" },
     { name = "django-environ", specifier = "==0.12.0" },
-    { name = "django-huey", specifier = "==1.2.1" },
-    { name = "django-import-export", specifier = "==4.3.5" },
+    { name = "django-huey", specifier = "==1.3.1" },
+    { name = "django-import-export", specifier = "==4.4.0" },
     { name = "django-model-utils", specifier = "==5.0.0" },
-    { name = "django-simple-history", specifier = "==3.7.0" },
+    { name = "django-simple-history", specifier = "==3.11.0" },
     { name = "django-storages", extras = ["google"], specifier = "==1.14.6" },
     { name = "django-taggit", specifier = ">=6.1.0" },
     { name = "djangorestframework", specifier = "==3.16.1" },
@@ -1684,7 +1684,7 @@ dev = [
     { name = "django-stubs", extras = ["compatible-mypy"], specifier = "==5.2.8" },
     { name = "djangorestframework-stubs", specifier = "==3.16.6" },
     { name = "djlint", specifier = "==1.36.4" },
-    { name = "factory-boy", specifier = "==3.3.2" },
+    { name = "factory-boy", specifier = "==3.3.3" },
     { name = "ipdb", specifier = "==0.13.13" },
     { name = "mypy", specifier = "==1.19.1" },
     { name = "pre-commit", specifier = "==4.5.1" },
