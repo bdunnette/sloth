@@ -1,3 +1,4 @@
+import logging
 from datetime import timedelta
 
 from django.conf import settings
@@ -7,6 +8,8 @@ from huey import crontab
 from huey.contrib.djhuey import periodic_task
 
 from .models import Attendance
+
+logger = logging.getLogger(__name__)
 
 
 @periodic_task(crontab(hour=8, minute=0))  # Daily at 8:00 AM
@@ -44,13 +47,18 @@ def send_unpaid_attendance_reminders():
             f"Sloth Derby Team"
         )
 
-        send_mail(
-            subject=subject,
-            message=message,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[skater.guardian_email],
-            fail_silently=False,
-        )
-
-        attendance.reminder_sent = True
-        attendance.save()
+        try:
+            send_mail(
+                subject=subject,
+                message=message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[skater.guardian_email],
+                fail_silently=False,
+            )
+            attendance.reminder_sent = True
+            attendance.save()
+        except Exception as e:
+            logger.error(
+                f"Failed to send reminder email for attendance {attendance.id} "
+                f"(skater: {skater.name}, practice: {practice.date}): {e}",
+            )

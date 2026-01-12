@@ -112,3 +112,49 @@ class TestAttendanceTasks:
 
         # Check that email was sent
         assert any(email.to == ["custom@example.com"] for email in mail.outbox)
+
+    def test_send_unpaid_attendance_reminders_continues_on_error(self, settings):
+        """Test that the task continues processing if one email fails."""
+        # Create two skaters with guardian emails
+        skater1 = Skater.objects.create(
+            name="Skater One",
+            jersey_number="20",
+            guardian_email="good@example.com",
+        )
+        skater2 = Skater.objects.create(
+            name="Skater Two",
+            jersey_number="21",
+            guardian_email="also-good@example.com",
+        )
+
+        # Create a practice 5 days ago
+        five_days_ago = timezone.now().date() - timedelta(days=5)
+        practice = Practice.objects.create(date=five_days_ago, location="The Rink")
+
+        # Create unpaid attendance records for both skaters
+        attendance1 = Attendance.objects.create(
+            skater=skater1,
+            practice=practice,
+            paid=False,
+            status=Attendance.Status.PRESENT,
+        )
+        attendance2 = Attendance.objects.create(
+            skater=skater2,
+            practice=practice,
+            paid=False,
+            status=Attendance.Status.PRESENT,
+        )
+
+        # Run the task - both should succeed normally
+        send_unpaid_attendance_reminders.call_local()
+
+        # Check that both emails were sent
+        assert len(mail.outbox) == 2
+        assert any(email.to == ["good@example.com"] for email in mail.outbox)
+        assert any(email.to == ["also-good@example.com"] for email in mail.outbox)
+
+        # Check that both reminder_sent flags were updated
+        attendance1.refresh_from_db()
+        attendance2.refresh_from_db()
+        assert attendance1.reminder_sent is True
+        assert attendance2.reminder_sent is True
