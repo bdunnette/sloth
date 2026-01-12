@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container mt-4">
+    <nav class="nav nav-pills mb-4">
+      <a class="nav-link {% if 'skaters' in request.path %}active{% endif %}"
+         href="{% url 'attendance:skater_list' %}">Skaters</a>
+      <a class="nav-link {% if 'practices' in request.path %}active{% endif %}"
+         href="{% url 'attendance:practice_list' %}">Practices</a>
+    </nav>
+    {% block attendance_content %}
+    {% endblock attendance_content %}
+  </div>
+{% endblock content %}

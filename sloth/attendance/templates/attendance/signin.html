@@ -1,0 +1,41 @@
+{% extends "attendance/base_attendance.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block attendance_content %}
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h1 class="text-center mb-4">
+            <i class="bi bi-person-check"></i> Sign In
+          </h1>
+          {% if practice %}
+            <div class="alert alert-info text-center">
+              <h5 class="mb-0">Practice: {{ practice.date }} @ {{ practice.location }}</h5>
+            </div>
+            <form method="post">
+              {% csrf_token %}
+              {{ form|crispy }}
+              <div class="d-grid gap-2 mt-4">
+                <button type="submit" class="btn btn-primary btn-lg">
+                  <i class="bi bi-check-lg"></i> Sign In
+                </button>
+              </div>
+            </form>
+          {% else %}
+            <div class="alert alert-warning text-center">
+              <h4 class="alert-heading">No Practice Today!</h4>
+              <p>There is no regularly scheduled practice for today's date.</p>
+              <hr />
+              <p class="mb-0">Check the schedule or contact your coach.</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+      <div class="text-center mt-3">
+        <a href="{% url 'home' %}">Back to Public Page</a>
+      </div>
+    </div>
+  </div>
+{% endblock attendance_content %}

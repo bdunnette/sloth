@@ -1,0 +1,47 @@
+{% extends "attendance/base_attendance.html" %}
+
+{% block attendance_content %}
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Skaters</h1>
+    <a href="{% url 'attendance:skater_add' %}" class="btn btn-primary">Add Skater</a>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Derby Name</th>
+          <th>Jersey #</th>
+          <th>Legal Name</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for skater in skaters %}
+          <tr>
+            <td>{{ skater.name }}</td>
+            <td>{{ skater.jersey_number }}</td>
+            <td>{{ skater.legal_name }}</td>
+            <td>
+              {% for tag in skater.tags.all %}
+                <span class="badge bg-primary">{{ tag.name }}</span>
+              {% empty %}
+                <span class="text-muted">No tags</span>
+              {% endfor %}
+            </td>
+            <td>
+              <a href="{% url 'attendance:skater_edit' skater.pk %}"
+                 class="btn btn-sm btn-outline-secondary">Edit</a>
+              <a href="{% url 'attendance:skater_delete' skater.pk %}"
+                 class="btn btn-sm btn-outline-danger">Delete</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="5" class="text-center">No skaters found.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock attendance_content %}

@@ -1,0 +1,69 @@
+{% extends "attendance/base_attendance.html" %}
+
+{% block attendance_content %}
+  <div class="mb-4">
+    <a href="{% url 'attendance:practice_list' %}"
+       class="btn btn-secondary mb-3"><i class="bi bi-arrow-left"></i>Back to
+    Practices</a>
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <h1>{{ practice.date }}</h1>
+        <h5 class="text-muted">{{ practice.location }}</h5>
+      </div>
+      <div>
+        {% if practice.is_canceled %}
+          <span class="badge bg-danger fs-5">Canceled</span>
+        {% else %}
+          <span class="badge bg-success fs-5">Scheduled</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h3 class="card-title mb-0">Attendance</h3>
+      <!-- Potential future feature: Bulk Add button -->
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Skater</th>
+              <th>Jersey #</th>
+              <th>Status</th>
+              <th>Paid</th>
+              <th>Notes</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for record in attendance_records %}
+              <tr>
+                <td>{{ record.skater.name }}</td>
+                <td>{{ record.skater.jersey_number }}</td>
+                <td>{{ record.get_status_display }}</td>
+                <td>
+                  {% if record.paid %}
+                    <span class="text-success">Yes</span>
+                  {% else %}
+                    <span class="text-danger">No</span>
+                  {% endif %}
+                </td>
+                <td>{{ record.notes|default:"-" }}</td>
+                <td>
+                  <a href="{% url 'attendance:practice_attendance_edit' practice.pk %}"
+                     class="btn btn-sm btn-outline-primary">Edit All</a>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="6" class="text-center text-muted">No attendance records yet.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock attendance_content %}
