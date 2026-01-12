@@ -13,8 +13,9 @@ from .models import Attendance
 def send_unpaid_attendance_reminders():
     """
     Sends email reminders to guardians for attendance records that remain unpaid
-    after 5 days. Only sends reminders for PRESENT attendance, as ABSENT and
-    EXCUSED attendance do not require payment.
+    after the configured number of days (UNPAID_ATTENDANCE_REMINDER_DAYS). Only
+    sends reminders for PRESENT attendance, as ABSENT and EXCUSED attendance do
+    not require payment.
     """
     five_days_ago = timezone.now().date() - timedelta(
         days=settings.UNPAID_ATTENDANCE_REMINDER_DAYS,
