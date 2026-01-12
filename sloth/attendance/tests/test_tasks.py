@@ -112,3 +112,54 @@ class TestAttendanceTasks:
 
         # Check that email was sent
         assert any(email.to == ["custom@example.com"] for email in mail.outbox)
+
+    def test_send_unpaid_attendance_reminders_no_guardian_email(self):
+        """Test that skaters without guardian emails are correctly filtered out."""
+        # Create a practice 5 days ago
+        five_days_ago = timezone.now().date() - timedelta(days=5)
+        practice = Practice.objects.create(date=five_days_ago, location="The Rink")
+
+        # Create a skater with None guardian email (blank=True in model)
+        skater_no_email = Skater.objects.create(
+            name="No Email Skater",
+            jersey_number="20",
+            guardian_email="",  # Empty string
+        )
+
+        # Create unpaid attendance for skater without email
+        Attendance.objects.create(
+            skater=skater_no_email,
+            practice=practice,
+            paid=False,
+            status=Attendance.Status.PRESENT,
+        )
+
+        # Create another skater with a valid email for comparison
+        skater_with_email = Skater.objects.create(
+            name="Valid Email Skater",
+            jersey_number="21",
+            guardian_email="valid@example.com",
+        )
+
+        # Create unpaid attendance for skater with email
+        Attendance.objects.create(
+            skater=skater_with_email,
+            practice=practice,
+            paid=False,
+            status=Attendance.Status.PRESENT,
+        )
+
+        # Run the task
+        send_unpaid_attendance_reminders.call_local()
+
+        # Check that only one email was sent (to the skater with valid email)
+        assert len(mail.outbox) == 1
+        assert mail.outbox[0].to == ["valid@example.com"]
+
+        # Verify the skater without email did not get a reminder sent flag
+        attendance_no_email = Attendance.objects.get(skater=skater_no_email)
+        assert attendance_no_email.reminder_sent is False
+
+        # Verify the skater with email got the reminder sent flag
+        attendance_with_email = Attendance.objects.get(skater=skater_with_email)
+        assert attendance_with_email.reminder_sent is True
