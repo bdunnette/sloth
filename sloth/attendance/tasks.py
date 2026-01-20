@@ -35,6 +35,7 @@ def send_unpaid_attendance_reminders():
         .select_related("skater", "practice")
     )
 
+    records_to_update = []
     for attendance in unpaid_attendance:
         skater = attendance.skater
         practice = attendance.practice
@@ -49,21 +50,17 @@ def send_unpaid_attendance_reminders():
             f"Sloth Derby Team"
         )
 
-        try:
-            send_mail(
-                subject=subject,
-                message=message,
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[skater.guardian_email],
-                fail_silently=False,
-            )
-            attendance.reminder_sent = True
-            attendance.save()
-        except Exception:
-            logger.exception(
-                "Failed to send reminder email for attendance %s "
-                "(skater: %s, practice: %s)",
-                attendance.id,
-                skater.name,
-                practice.date,
-            )
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[skater.guardian_email],
+            fail_silently=False,
+        )
+
+        attendance.reminder_sent = True
+        records_to_update.append(attendance)
+
+    # Bulk update all reminder_sent flags in a single database query
+    if records_to_update:
+        Attendance.objects.bulk_update(records_to_update, ["reminder_sent"])
