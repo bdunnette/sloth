@@ -1,3 +1,4 @@
+import logging
 from datetime import timedelta
 
 from django.conf import settings
@@ -7,6 +8,8 @@ from huey import crontab
 from huey.contrib.djhuey import periodic_task
 
 from .models import Attendance
+
+logger = logging.getLogger(__name__)
 
 
 @periodic_task(crontab(hour=8, minute=0))  # Daily at 8:00 AM
