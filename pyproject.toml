@@ -121,6 +121,7 @@ ignore = [
     "S101", # Use of assert detected https://docs.astral.sh/ruff/rules/assert/
     "RUF012", # Mutable class attributes should be annotated with `typing.ClassVar`
     "SIM102", # sometimes it's better to nest
+    "EXE001", # executable bit might be wrong, because Windows
     # of types for comparison.
     # Deactivated because it can make the code slow:
     # https://github.com/astral-sh/ruff/issues/7871
@@ -138,7 +139,7 @@ dev = [
     "django-stubs[compatible-mypy]==5.2.9",
     "djangorestframework-stubs==3.16.8",
     "djlint==1.36.4",
-    "factory-boy==3.3.3",
+    "factory-boy==3.3.2",
     "ipdb==0.13.13",
     "mypy==1.19.1",
     "pre-commit==4.5.1",
@@ -175,7 +176,6 @@ dependencies = [
     "django-environ==0.12.0",
     "django-import-export>=4.4.0",
     "django-model-utils==5.0.0",
-    #"django-redis==6.0.0",
     "django-simple-history>=3.11.0",
     "django-storages[s3]==1.14.6",
     "django-taggit>=6.1.0",
@@ -183,11 +183,8 @@ dependencies = [
     "djangorestframework==3.16.1",
     "drf-spectacular==0.29.0",
     "gunicorn==25.0.2",
-    #"hiredis==3.3.0",
     "pillow==12.1.0",
-    #"psycopg[c]==3.3.2",
     "python-slugify==8.0.4",
-    #"redis==7.1.0",
     "sentry-sdk==2.52.0",
     "whitenoise==6.11.0",
 ]
