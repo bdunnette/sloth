@@ -25,13 +25,18 @@ jobs:
       - name: Checkout Code Repository
         uses: actions/checkout@v6
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: 'true'
+
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
           python-version-file: '.python-version'
-      # Consider using pre-commit.ci for open source project
-      - name: Run pre-commit
-        uses: pre-commit/action@v3.0.1
+
+      - name: Run prek
+        run: uv run prek run --all-files
 
   # With no caching at all the entire ci process takes 3m to complete!
   pytest:
